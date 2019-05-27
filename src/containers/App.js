@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import classes from "./App.css";
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
+import WithClass from "../hoc/withClass";
 
 class App extends Component {
   state = {
@@ -10,7 +11,8 @@ class App extends Component {
       { id: "20", name: "Meryeme", age: "15" },
       { id: "30", name: "Brahim", age: "23" }
     ],
-    showPersons: false
+    showPersons: false,
+    clickedCounter: 0
   };
 
   deletePersonHandler = personIndex => {
@@ -34,8 +36,11 @@ class App extends Component {
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({
-      showPersons: !doesShow
+    this.setState((prevState, props) => {
+      return {
+        showPersons: !doesShow,
+        clickedCounter: prevState.clickedCounter + 1
+      };
     });
   };
 
@@ -53,7 +58,7 @@ class App extends Component {
     }
 
     return (
-      <div className={classes.App}>
+      <WithClass classes={classes.App}>
         <Cockpit
           showPersons={this.state.showPersons}
           persons={this.state.persons}
@@ -61,7 +66,7 @@ class App extends Component {
           appTitle={this.props.title}
         />
         {persons}
-      </div>
+      </WithClass>
     );
   }
 }
