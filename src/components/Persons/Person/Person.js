@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Person.css";
-import Aux from "../../../hoc/Aux";
+import Aux from "../../../hoc/Auxiliary";
 import withClass from "../../../hoc/withClass_0";
 
 const person = props => {
