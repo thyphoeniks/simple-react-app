@@ -1,18 +1,50 @@
-import React from "react";
+import React, { Component } from "react";
 import classes from "./Person.css";
 import Aux from "../../../hoc/Auxiliary";
 import withClass from "../../../hoc/withClass_0";
+import PropTypes from "prop-types";
 
-const person = props => {
-  return (
-    <Aux>
-      <p onClick={props.click}>
-        I am a {props.name} and i am {props.age} years old!
-      </p>
-      <p>{props.children}</p>
-      <input type="text" onChange={props.changed} value={props.name} />
-    </Aux>
-  );
+import { AuthContext } from "../../../containers/App";
+
+class Person extends Component {
+  constructor(props) {
+    super(props);
+    this.inputElement = React.createRef();
+  }
+
+  componentDidMount() {
+    if (this.props.position === 0) {
+      // this.inputElement.focus();
+      this.inputElement.current.focus();
+    }
+  }
+
+  render() {
+    return (
+      <Aux>
+        <AuthContext.Consumer>
+          {auth => (auth ? <p>I am authenticated</p> : null)}
+        </AuthContext.Consumer>
+        <p onClick={this.props.click}>
+          I am a {this.props.name} and i am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          ref={this.inputElement}
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+Person.propTypes = {
+  click: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func
 };
 
-export default withClass(person, classes.Person);
+export default withClass(Person, classes.Person);

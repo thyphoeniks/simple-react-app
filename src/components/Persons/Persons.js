@@ -6,6 +6,7 @@ const persons = props =>
     return (
       <Person
         click={() => props.deleted(index)}
+        position={index}
         name={person.name}
         age={person.age}
         key={person.id}
